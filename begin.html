@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Begin — Lucas Lansing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #F5F0E8;
+  --warm-white: #FAF8F4;
+  --earth: #8B7355;
+  --deep-green: #2C3E2D;
+  --forest: #3D5140;
+  --sienna: #9C6B3C;
+  --muted: #9A9189;
+  --dark: #1A1A18;
+  --line: rgba(139,115,85,0.18);
+  --error: #C0392B;
+  --success: #3D5140;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+body {
+  background: var(--cream);
+  color: var(--dark);
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+body::after {
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events:none;
+  z-index:999;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28px 64px;
+  background: rgba(245,240,232,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  letter-spacing: 0.12em;
+  color: var(--deep-green);
+  text-decoration: none;
+}
+
+.nav-back {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.3s;
+}
+
+.nav-back::before { content: '←'; }
+.nav-back:hover { color: var(--earth); }
+
+/* ── HERO STRIP ── */
+.begin-hero {
+  padding-top: 120px;
+  background: var(--deep-green);
+  padding-bottom: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.begin-hero::before {
+  content:'';
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(ellipse at 80% 20%, rgba(61,81,64,0.7) 0%, transparent 60%),
+    radial-gradient(ellipse at 10% 90%, rgba(139,115,85,0.12) 0%, transparent 50%);
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 80px 80px 0;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 80px;
+  align-items: end;
+}
+
+.hero-left {}
+
+.hero-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--earth);
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  opacity: 0;
+  animation: fadeUp 0.9s ease 0.1s forwards;
+}
+
+.hero-eyebrow::before {
+  content:'';
+  width: 32px;
+  height: 1px;
+  background: var(--earth);
+}
+
+.begin-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(48px, 6vw, 88px);
+  font-weight: 300;
+  line-height: 1.0;
+  color: var(--cream);
+  margin-bottom: 32px;
+  opacity: 0;
+  animation: fadeUp 0.9s ease 0.2s forwards;
+}
+
+.begin-title em {
+  font-style: italic;
+  color: var(--earth);
+}
+
+.begin-sub {
+  font-size: 15px;
+  line-height: 1.85;
+  color: rgba(245,240,232,0.55);
+  max-width: 420px;
+  margin-bottom: 48px;
+  opacity: 0;
+  animation: fadeUp 0.9s ease 0.3s forwards;
+}
+
+.what-to-expect {
+  opacity: 0;
+  animation: fadeUp 0.9s ease 0.4s forwards;
+  border-top: 1px solid rgba(245,240,232,0.1);
+  padding-top: 36px;
+}
+
+.expect-label {
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--earth);
+  margin-bottom: 20px;
+  opacity: 0.7;
+}
+
+.expect-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.expect-list li {
+  font-size: 14px;
+  color: rgba(245,240,232,0.55);
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  line-height: 1.5;
+}
+
+.expect-list li::before {
+  content: '✓';
+  color: var(--earth);
+  font-size: 11px;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+/* Pull quote on right side of hero */
+.hero-right {
+  padding-bottom: 60px;
+  opacity: 0;
+  animation: fadeUp 0.9s ease 0.35s forwards;
+}
+
+.pull-block {
+  background: rgba(245,240,232,0.04);
+  border: 1px solid rgba(245,240,232,0.08);
+  padding: 48px 40px;
+  position: relative;
+}
+
+.pull-block::before {
+  content:'"';
+  font-family:'Cormorant Garamond',serif;
+  font-size: 100px;
+  color: var(--earth);
+  opacity: 0.2;
+  position:absolute;
+  top: -10px;
+  left: 32px;
+  line-height:1;
+}
+
+.pull-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.55;
+  color: var(--cream);
+  margin-bottom: 24px;
+}
+
+.pull-attr {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--earth);
+  opacity: 0.6;
+}
+
+.pull-result {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(245,240,232,0.08);
+  font-size: 13px;
+  color: rgba(245,240,232,0.35);
+  line-height: 1.7;
+}
+
+/* ── STEPS BAR ── */
+.steps-bar {
+  background: var(--warm-white);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  justify-content: center;
+}
+
+.steps-inner {
+  max-width: 900px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.step-item {
+  padding: 32px 28px;
+  border-right: 1px solid var(--line);
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.step-item:last-child { border-right: none; }
+
+.step-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 300;
+  color: var(--earth);
+  opacity: 0.4;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.step-text {}
+
+.step-name {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: var(--deep-green);
+  margin-bottom: 4px;
+}
+
+.step-desc {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* ── FORM SECTION ── */
+.form-section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 100px 80px;
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 100px;
+  align-items: start;
+}
+
+/* Left sidebar */
+.form-sidebar {}
+
+.sidebar-label {
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--earth);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.sidebar-label::before {
+  content:'';
+  width:28px;
+  height:1px;
+  background:var(--earth);
+  opacity:0.5;
+}
+
+.sidebar-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(28px, 3vw, 42px);
+  font-weight: 300;
+  line-height: 1.15;
+  color: var(--deep-green);
+  margin-bottom: 24px;
+}
+
+.sidebar-title em { font-style:italic; color:var(--earth); }
+
+.sidebar-body {
+  font-size: 14px;
+  line-height: 1.9;
+  color: var(--muted);
+  margin-bottom: 48px;
+}
+
+/* Testimonial cards in sidebar */
+.sidebar-testimonials {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sidebar-test {
+  background: var(--warm-white);
+  border: 1px solid var(--line);
+  padding: 28px 28px;
+  position: relative;
+}
+
+.sidebar-test-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 17px;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--deep-green);
+  line-height: 1.55;
+  margin-bottom: 14px;
+}
+
+.sidebar-test-attr {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--earth);
+  opacity: 0.6;
+}
+
+.sidebar-note {
+  margin-top: 36px;
+  padding: 24px 28px;
+  background: var(--deep-green);
+  font-size: 13px;
+  color: rgba(245,240,232,0.55);
+  line-height: 1.75;
+}
+
+.sidebar-note strong {
+  color: var(--cream);
+  font-weight: 400;
+}
+
+/* ── THE FORM ── */
+.form-container {}
+
+.form-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  font-weight: 300;
+  color: var(--deep-green);
+  margin-bottom: 8px;
+}
+
+.form-subtitle {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 48px;
+  line-height: 1.6;
+}
+
+.form-group {
+  margin-bottom: 32px;
+}
+
+.form-label {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--earth);
+  margin-bottom: 10px;
+}
+
+.form-label span {
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: none;
+  margin-left: 6px;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+  background: var(--warm-white);
+  border: 1px solid var(--line);
+  border-radius: 0;
+  padding: 16px 20px;
+  font-family: 'Jost', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--dark);
+  transition: border-color 0.3s ease;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  border-color: var(--earth);
+  background: #FBF9F5;
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: rgba(154,145,137,0.5);
+}
+
+.form-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238B7355' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 18px center;
+  padding-right: 44px;
+  cursor: pointer;
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 110px;
+  line-height: 1.65;
+}
+
+/* Radio group */
+.radio-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.radio-option {
+  position: relative;
+}
+
+.radio-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.radio-label {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  background: var(--warm-white);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.radio-option input:checked + .radio-label {
+  border-color: var(--earth);
+  background: #EDE8DF;
+}
+
+.radio-label:hover {
+  border-color: rgba(139,115,85,0.4);
+}
+
+.radio-name {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--deep-green);
+  margin-bottom: 3px;
+}
+
+.radio-price {
+  font-size: 11px;
+  color: var(--earth);
+  opacity: 0.7;
+}
+
+/* Divider */
+.form-divider {
+  width: 100%;
+  height: 1px;
+  background: var(--line);
+  margin: 12px 0 32px;
+}
+
+/* Submit */
+.submit-area {
+  margin-top: 8px;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 20px 40px;
+  background: var(--deep-green);
+  color: var(--cream);
+  border: none;
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.submit-btn:hover { background: var(--forest); }
+.submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.submit-note {
+  margin-top: 16px;
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+  line-height: 1.6;
+}
+
+/* ── SUCCESS STATE ── */
+.success-screen {
+  display: none;
+  text-align: center;
+  padding: 80px 40px;
+}
+
+.success-mark {
+  width: 64px;
+  height: 64px;
+  border: 1px solid var(--earth);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 32px;
+  font-size: 24px;
+  color: var(--earth);
+}
+
+.success-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 40px;
+  font-weight: 300;
+  color: var(--deep-green);
+  margin-bottom: 16px;
+}
+
+.success-title em { font-style:italic; color:var(--earth); }
+
+.success-body {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.85;
+  max-width: 420px;
+  margin: 0 auto 40px;
+}
+
+.success-next {
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+
+/* ── TESTIMONIALS FULL ── */
+.testimonials-section {
+  background: var(--deep-green);
+  padding: 120px 80px;
+}
+
+.test-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.test-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  margin-bottom: 64px;
+  align-items: end;
+}
+
+.test-hed {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(36px, 4vw, 56px);
+  font-weight: 300;
+  color: var(--cream);
+  line-height: 1.1;
+}
+
+.test-hed em { font-style:italic; color:var(--earth); }
+
+.test-intro {
+  font-size: 14px;
+  line-height: 1.9;
+  color: rgba(245,240,232,0.4);
+  padding-top: 8px;
+}
+
+.test-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+
+.test-card {
+  background: rgba(245,240,232,0.04);
+  border: 1px solid rgba(245,240,232,0.07);
+  padding: 44px 36px;
+  transition: background 0.3s;
+}
+
+.test-card:hover { background: rgba(245,240,232,0.06); }
+
+.test-qmark {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 64px;
+  line-height: 1;
+  color: var(--earth);
+  opacity: 0.25;
+  margin-bottom: 8px;
+}
+
+.test-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 19px;
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--cream);
+  margin-bottom: 24px;
+}
+
+.test-attr {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--earth);
+  opacity: 0.6;
+}
+
+.test-detail {
+  margin-top: 10px;
+  font-size: 12px;
+  color: rgba(245,240,232,0.25);
+  line-height: 1.5;
+}
+
+/* Large featured testimonial */
+.test-featured {
+  margin-top: 2px;
+  background: rgba(245,240,232,0.04);
+  border: 1px solid rgba(245,240,232,0.07);
+  padding: 56px 56px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.featured-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.55;
+  color: var(--cream);
+}
+
+.featured-right {}
+
+.featured-attr {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--earth);
+  opacity: 0.6;
+  margin-bottom: 16px;
+}
+
+.featured-context {
+  font-size: 14px;
+  color: rgba(245,240,232,0.4);
+  line-height: 1.8;
+}
+
+/* ── FAQ ── */
+.faq-section {
+  background: var(--warm-white);
+  padding: 120px 80px;
+  border-bottom: 1px solid var(--line);
+}
+
+.faq-inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.faq-header {
+  margin-bottom: 60px;
+}
+
+.faq-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 300;
+  color: var(--deep-green);
+  margin-top: 16px;
+}
+
+.faq-title em { font-style:italic; color:var(--earth); }
+
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--line);
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--line);
+}
+
+.faq-q {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 28px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  text-align: left;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 300;
+  color: var(--deep-green);
+  gap: 24px;
+  transition: color 0.3s;
+}
+
+.faq-q:hover { color: var(--earth); }
+
+.faq-icon {
+  font-size: 20px;
+  color: var(--earth);
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+  line-height: 1;
+}
+
+.faq-item.open .faq-icon { transform: rotate(45deg); }
+
+.faq-a {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.3s ease;
+}
+
+.faq-a-inner {
+  padding-bottom: 28px;
+  font-size: 14px;
+  line-height: 1.9;
+  color: var(--muted);
+  max-width: 640px;
+}
+
+.faq-item.open .faq-a { max-height: 300px; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--dark);
+  padding: 56px 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  letter-spacing: 0.1em;
+  color: var(--earth);
+}
+
+.footer-right {
+  font-size: 11px;
+  color: rgba(245,240,232,0.2);
+  letter-spacing: 0.08em;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(18px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.85s ease, transform 0.85s ease;
+}
+
+.reveal.visible { opacity:1; transform:translateY(0); }
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  nav { padding: 20px 32px; }
+  .hero-inner { grid-template-columns: 1fr; padding: 60px 32px 0; }
+  .hero-right { display: none; }
+  .steps-inner { grid-template-columns: 1fr 1fr; }
+  .form-section { grid-template-columns: 1fr; gap: 56px; padding: 72px 32px; }
+  .radio-grid { grid-template-columns: 1fr; }
+  .testimonials-section { padding: 80px 32px; }
+  .test-grid { grid-template-columns: 1fr; }
+  .test-header { grid-template-columns: 1fr; gap: 24px; }
+  .test-featured { grid-template-columns: 1fr; gap: 32px; padding: 40px 32px; }
+  .faq-section { padding: 80px 32px; }
+  footer { flex-direction:column; gap:16px; text-align:center; padding:40px 32px; }
+}
+
+@media(max-width:600px){
+  .steps-inner { grid-template-columns: 1fr; }
+  .step-item { border-right:none; border-bottom: 1px solid var(--line); }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">Lucas Lansing</a>
+  <a href="/" class="nav-back">Back to home</a>
+</nav>
+
+<!-- HERO -->
+<div class="begin-hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-eyebrow">The first step</div>
+      <h1 class="begin-title">Let's find out<br>if this is<br><em>a fit.</em></h1>
+      <p class="begin-sub">This is a 30-minute conversation — not a sales call. Tell me a little about where you are, and I'll tell you honestly whether what I do is right for you.</p>
+      <div class="what-to-expect">
+        <div class="expect-label">What to expect on the call</div>
+        <ul class="expect-list">
+          <li>We talk about where you are right now — honestly, with no judgment</li>
+          <li>You tell me what you've tried and what hasn't worked</li>
+          <li>I share what working together actually looks like</li>
+          <li>We both decide if there's a fit — zero pressure, either way</li>
+        </ul>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="pull-block">
+        <p class="pull-quote">I came in thinking I just needed better habits. What Lucas helped me see was that I needed a completely different relationship with my own nervous system.</p>
+        <div class="pull-attr">Retainer Client · Lake Tahoe</div>
+        <p class="pull-result">Outcome: 3-month retainer → sleeping 7+ hrs, daily meditation practice, morning HRV scores up 22 points on average.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Steps bar -->
+  <div class="steps-bar">
+    <div class="steps-inner">
+      <div class="step-item">
+        <div class="step-num">01</div>
+        <div class="step-text">
+          <div class="step-name">Fill this out</div>
+          <div class="step-desc">3 minutes. Helps me show up prepared.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">02</div>
+        <div class="step-text">
+          <div class="step-name">Book your call</div>
+          <div class="step-desc">30 minutes. Pick a time that works for you.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">03</div>
+        <div class="step-text">
+          <div class="step-name">We talk honestly</div>
+          <div class="step-desc">About your goals, your situation, and fit.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">04</div>
+        <div class="step-text">
+          <div class="step-name">Decision, together</div>
+          <div class="step-desc">You'll know the right answer. So will I.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FORM + SIDEBAR -->
+<div class="form-section">
+
+  <!-- Sidebar -->
+  <div class="form-sidebar reveal">
+    <div class="sidebar-label">Why it starts here</div>
+    <h2 class="sidebar-title">The right fit<br>matters more than<br>the <em>right pitch.</em></h2>
+    <p class="sidebar-body">I keep my client roster small intentionally — a maximum of 10 retainer clients at any time. That's not marketing copy. It's the only way the work stays deep. So before we talk, I want to know a little about you.</p>
+
+    <div class="sidebar-testimonials">
+      <div class="sidebar-test">
+        <p class="sidebar-test-quote">The discovery call felt nothing like a sales call. Lucas just... listened. And then asked one question that unlocked something I'd been circling for months.</p>
+        <div class="sidebar-test-attr">Retainer Client · Incline Village</div>
+      </div>
+      <div class="sidebar-test">
+        <p class="sidebar-test-quote">I booked the call skeptically. I enrolled two days later. Not because I was pressured — because I finally felt like someone actually understood what I was dealing with.</p>
+        <div class="sidebar-test-attr">Radical Roots Client · Tahoe</div>
+      </div>
+    </div>
+
+    <div class="sidebar-note">
+      <strong>A note on privacy.</strong> What you share here is read only by me. It helps me show up to our conversation prepared — not with a pitch, but with genuine context about your situation.
+    </div>
+  </div>
+
+  <!-- Form -->
+  <div class="form-container reveal" style="transition-delay:0.15s">
+    <h3 class="form-title">Tell me a little about yourself.</h3>
+    <p class="form-subtitle">Takes about 3 minutes. Required fields only — no fluff.</p>
+
+    <div id="applicationForm">
+
+      <div class="form-group">
+        <label class="form-label">Your name</label>
+        <input type="text" class="form-input" placeholder="First and last name" id="fname">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Email address</label>
+        <input type="email" class="form-input" placeholder="you@email.com" id="femail">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Where are you located?</label>
+        <input type="text" class="form-input" placeholder="e.g. Incline Village, Tahoe City, Reno..." id="flocation">
+      </div>
+
+      <div class="form-divider"></div>
+
+      <div class="form-group">
+        <label class="form-label">Which container feels most relevant? <span>(you can change this)</span></label>
+        <div class="radio-grid">
+          <div class="radio-option">
+            <input type="radio" name="tier" id="t1" value="foundation">
+            <label class="radio-label" for="t1">
+              <span class="radio-name">Foundation</span>
+              <span class="radio-price">Daily Roots · $60–$160/mo</span>
+            </label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="tier" id="t2" value="retainer" checked>
+            <label class="radio-label" for="t2">
+              <span class="radio-name">Retainer</span>
+              <span class="radio-price">Performance & Presence · $2,500/mo</span>
+            </label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="tier" id="t3" value="retreat">
+            <label class="radio-label" for="t3">
+              <span class="radio-name">Retreat</span>
+              <span class="radio-price">Radical Roots · $5K–$12K</span>
+            </label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="tier" id="t4" value="unsure">
+            <label class="radio-label" for="t4">
+              <span class="radio-name">Not sure yet</span>
+              <span class="radio-price">Let's talk it through</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-divider"></div>
+
+      <div class="form-group">
+        <label class="form-label">What's the main thing you're trying to change or create?</label>
+        <textarea class="form-textarea" placeholder="Be as specific as you want. The more honest you are here, the more useful our call will be." id="fgoal"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">What have you already tried? <span>(optional)</span></label>
+        <textarea class="form-textarea" style="min-height:80px" placeholder="Apps, coaches, programs, therapists — whatever comes to mind." id="ftried"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">How did you hear about me?</label>
+        <select class="form-select" id="fhow">
+          <option value="" disabled selected>Choose one</option>
+          <option>Instagram</option>
+          <option>Personal referral</option>
+          <option>Google search</option>
+          <option>Yoga or fitness class</option>
+          <option>Previous client</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="submit-area">
+        <button class="submit-btn" onclick="handleSubmit()">Send & Book My Call</button>
+        <p class="submit-note">You'll be taken to a calendar to pick your time immediately after submitting. No spam, no follow-up sequences — just me.</p>
+      </div>
+
+    </div><!-- end form -->
+
+    <!-- Success state -->
+    <div class="success-screen" id="successScreen">
+      <div class="success-mark">✓</div>
+      <h3 class="success-title">You're on the <em>calendar.</em></h3>
+      <p class="success-body">I've received your application and I'm looking forward to our conversation. You'll get a confirmation email with the call details. I'll come prepared — no sales deck, just a real conversation.</p>
+      <p class="success-next">In the meantime, you might explore <strong>The Root System Method</strong> on the homepage, or follow along at <strong>@lucas.lansing.coaching</strong> on Instagram.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- TESTIMONIALS (full section) -->
+<section class="testimonials-section">
+  <div class="test-inner">
+    <div class="test-header reveal">
+      <div>
+        <div style="font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:var(--earth);margin-bottom:16px;display:flex;align-items:center;gap:14px"><span style="width:28px;height:1px;background:var(--earth);opacity:0.5;display:inline-block"></span>Roots in action</div>
+        <h2 class="test-hed">What clients<br>actually <em>say.</em></h2>
+      </div>
+      <p class="test-intro reveal">These aren't curated success stories. They're honest reflections from people who did the work — and discovered that the real shift was always deeper than they expected.</p>
+    </div>
+
+    <div class="test-grid">
+      <div class="test-card reveal">
+        <div class="test-qmark">"</div>
+        <p class="test-quote">Working with Lucas changed my relationship with stress entirely. I have tools I actually use — and for the first time I feel like my body and mind are on the same team.</p>
+        <div class="test-attr">Retainer Client · Lake Tahoe</div>
+        <div class="test-detail">3-month Performance & Presence container</div>
+      </div>
+      <div class="test-card reveal" style="transition-delay:0.1s">
+        <div class="test-qmark">"</div>
+        <p class="test-quote">The in-home retreat was unlike anything I'd experienced. Lucas holds space in a way that makes you feel safe enough to actually go deep. I left a genuinely different person.</p>
+        <div class="test-attr">Radical Roots Client · Incline Village</div>
+        <div class="test-detail">5-day in-home immersion retreat</div>
+      </div>
+      <div class="test-card reveal" style="transition-delay:0.2s">
+        <div class="test-qmark">"</div>
+        <p class="test-quote">I'd tried so many things. Lucas was the first practitioner who listened and built something specific to me. Three months in — sleeping better, training better, just clearer.</p>
+        <div class="test-attr">Retainer Client · Tahoe</div>
+        <div class="test-detail">3-month Performance & Presence container</div>
+      </div>
+    </div>
+
+    <div class="test-featured reveal">
+      <p class="featured-quote">I came in thinking I needed a better morning routine. What I found was that I'd been running my entire life from a place of low-grade anxiety I didn't even know was there. Three months with Lucas didn't just fix the routine — it changed the operating system underneath it.</p>
+      <div class="featured-right">
+        <div class="featured-attr">High-Net-Worth Client · Private Referral</div>
+        <p class="featured-context">Enrolled via discovery call after a referral from a mutual connection. Completed the full 3-month retainer. Now in ongoing monthly maintenance work.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="faq-inner">
+    <div class="faq-header reveal">
+      <div style="font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:var(--earth);display:flex;align-items:center;gap:14px;margin-bottom:16px"><span style="width:28px;height:1px;background:var(--earth);opacity:0.5;display:inline-block"></span>Before you apply</div>
+      <h2 class="faq-title">Honest answers to<br>the real <em>questions.</em></h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Is the discovery call actually free? What's the catch?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">Yes, it's completely free and there's no catch. My goal for the call is to understand your situation well enough to tell you honestly whether I can help — and if I can't, to point you toward someone who can. I don't use high-pressure tactics. If it's a fit, we'll both feel it. If it's not, that's useful information too.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Do I have to be in Lake Tahoe to work with you?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">For the retainer, no. Weekly coaching calls happen over Zoom and work for anyone, anywhere. The monthly in-home session is available for clients in the Tahoe/Reno area. The Radical Roots retreat is in-person by nature, but I've traveled to clients outside the area for longer engagements. If you're remote, we'll design something that works.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          I've done coaching before and it didn't stick. Why would this be different?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">Honest answer: it might not be. But if previous coaching didn't stick, it's almost always for one of two reasons — either it was too surface-level (new habits without addressing the nervous system underneath), or the container wasn't personalized enough. What I do is both. We work at the root level, and nothing I give you is generic. That said, the discovery call is exactly where we'd talk about what didn't work before and why.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          What's the commitment for the retainer?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">The retainer is a 3-month container at $2,500/month. I ask for the full 3-month commitment because real change doesn't happen in 4 weeks. The first month is foundation-setting, the second is deepening, and the third is where integration and momentum compound. After three months, many clients continue on a monthly basis. Payment is month-to-month within the 3-month container.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          I'm not sure I'm ready. Should I still reach out?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">If you're reading this page and this question came up — yes. "Not sure I'm ready" is almost always the exact right time to have a real conversation about it. You don't need to have everything figured out before you reach out. That's what the call is for.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Lucas Lansing · Heart Alchemy LLC</div>
+  <div class="footer-right">lucas.lansing.coaching@gmail.com &nbsp;·&nbsp; @lucas.lansing.coaching</div>
+</footer>
+
+<script>
+// Reveal on scroll
+const reveals = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
+reveals.forEach(el => obs.observe(el));
+
+// FAQ accordion
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+// Form submit
+function handleSubmit() {
+  const name = document.getElementById('fname').value.trim();
+  const email = document.getElementById('femail').value.trim();
+  const goal = document.getElementById('fgoal').value.trim();
+
+  if (!name || !email || !goal) {
+    alert('Please fill in your name, email, and what you\'re trying to change — then we\'re good to go.');
+    return;
+  }
+
+  // In production: POST to your form handler (Formspree, Netlify, etc.)
+  // For now, show success state
+  document.getElementById('applicationForm').style.display = 'none';
+  document.getElementById('successScreen').style.display = 'block';
+
+  // In production, redirect to Calendly:
+  // window.open('https://calendly.com/lucaslansing/discovery', '_blank');
+}
+</script>
+</body>
+</html>
